@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/lightbox2/dist/css/lightbox.css" />
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    #map {
+        height: calc(100vh - 70px);
+        width: 100%;
+    }
+    .title {
+        position: absolute;
+        background: rgba(195, 243, 185, 0.8);
+        padding: 0;
+        border-radius: 5px;
+        top: 0;
+        left: 325px;
+        z-index: 500;
+    }
+    .logo {
+        max-width: 50px;
+    }
+</style>
+</head>
+<body>
+<div class="title">
+    <h2>LOT FOR SALE</h1>
+    <h3>CHRISTIAN GODINO</h2>
+    <p>Contact: 09285354832</h3>
+    <p><a href="https://www.facebook.com/christian.godino.18" target="_blank">FB: christian.godino.18</a></p>
+</div>
+
+<img id="logo" src="https://i.imgur.com/8aLiKvh.png" alt="Company Logo">
+
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/lightbox2/dist/js/lightbox-plus-jquery.js"></script>
+<script>
+        // Initialize the Leaflet map centered on Borongan City
+        var myMap = L.map('map').setView([11.6076, 125.4858], 13);
+
+        // Aerial view base map
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: 'Tiles &copy; Esri'
+        }).addTo(myMap);
+
+        // Polygons
+        var polygon1 = L.polygon([
+            [11.629210190909845, 125.4203936451288],
+            [11.629741863878335, 125.42014051638083],
+            [11.629802434955108, 125.42039935671512],
+            [11.62912983545383, 125.42075096191606],
+            [11.629063143606043, 125.42062067613689],
+            [11.629321395285887, 125.42046184635835]
+        ], { color: 'red', fillOpacity: 0.3 }).addTo(myMap);
+
+        var polygon2 = L.polygon([
+            [11.613796567905004, 125.43092189094848],
+            [11.613806221005182, 125.43130623304297],
+            [11.613731445857761, 125.43133425805077],
+            [11.613707222241677, 125.4309218195425]
+        ], { color: 'red', fillOpacity: 0.3 }).addTo(myMap);
+        
+        // Define markers with custom images
+        var markers = [
+            {
+                coords: [11.613834651131745, 125.43098997815038],
+                title: "LOT-001",
+                location: "Brgy Balud, Borongan City",
+                area: "200 sq.m.",
+                cost: "P2500.00",
+                images: [
+                    'https://i.imgur.com/lZrVJx7.png',
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150'
+                ],
+                videos: [
+                    'https://www.youtube.com/watch?v=WoNlC4ecuEk',
+                    'https://www.youtube.com/embed/3JZ_D3ELwOQ'
+                ]
+            },
+            {
+                coords: [11.6080, 125.4860],
+                title: "LOT-002",
+                location: "Brgy Balud, Borongan City",
+                area: "200 sq.m.",
+                cost: "P2500.00",
+                images: [
+                    'https://i.imgur.com/SuZ61P3.jpg?1',
+                    'https://i.imgur.com/SuZ61P3.jpg?1',
+                    'https://i.imgur.com/SuZ61P3.jpg?1',
+                    'https://i.imgur.com/SuZ61P3.jpg?1'
+                ],
+                videos: [
+                    'https://www.youtube.com/watch?v=Qr98f2VFsD4',
+                    'https://www.youtube.com/watch?v=WoNlC4ecuEk'
+                ]
+            },
+            {
+                coords: [11.6090, 125.4870],
+                title: "LOT-003",
+                location: "Brgy Balud, Borongan City",
+                area: "200 sq.m.",
+                cost: "P2500.00",
+                images: [
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150'
+                ],
+                videos: [
+                    'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    'https://www.youtube.com/embed/3JZ_D3ELwOQ'
+                ]
+            },
+            {
+                coords: [11.6100, 125.4880],
+                title: "LOT-004",
+                location: "Brgy Balud, Borongan City",
+                area: "200 sq.m.",
+                cost: "P2500.00",
+                images: [
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150',
+                    'https://via.placeholder.com/150'
+                ],
+                videos: [
+                    'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                    'https://www.youtube.com/embed/3JZ_D3ELwOQ'
+                ]
+            }
+        ];
+
+        // Add markers to the map
+        markers.forEach(function(marker) {
+            var markerInstance = L.marker(marker.coords).addTo(myMap);
+
+            markerInstance.on('click', function() {
+                var content = `<strong>${marker.title}</strong><br>
+                               Location: ${marker.location}<br>
+                               Area: ${marker.area}<br>
+                               Cost: ${marker.cost}<br>`;
+
+                content += '<h4>Images:</h4>';
+                marker.images.forEach(function(image, index) {
+                    content += `<a href="${image}" data-lightbox="${marker.title}" data-title="Image ${index + 1}"><img src="${image}" alt="Image ${index + 1}" style="width: 50px; margin-right: 5px;"></a>`;
+                });
+
+                content += '<h4>Videos:</h4>';
+                marker.videos.forEach(function(video) {
+                    content += `<a href="${video}" target="_blank">Watch Video</a><br>`;
+                });
+
+                // Unbind any previously bound popup
+                markerInstance.unbindPopup();
+                // Display the content in a popup
+                markerInstance.bindPopup(content).openPopup();
+            });
+        });
+    </script>
+</body>
+</html>
